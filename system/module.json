@@ -1,0 +1,15 @@
+	{
+  "info": {
+    "author": "Hallkezz",
+    "author_url": "",
+    "description": "System",
+    "name": "System"
+   },
+
+   "resources": {
+
+	"BackgroundImage" : "https://i.imgur.com/nBghAcL.png",
+	"LoadingCircle_Outer" : "https://i.imgur.com/AWLkpxd.png"
+
+	}
+}

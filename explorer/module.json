@@ -1,0 +1,17 @@
+{
+  "info": {
+    "author": "",
+    "author_url": "",
+    "description": "Auto-generated",
+    "name": "Explorer"
+  },
+  "resources": {
+    "DefaultWallpaper": "https://i.imgur.com/OtAscTe.jpg",
+    "StartMenu": "https://i.imgur.com/8NRZ4KR.png",
+    "TaskView": "https://i.imgur.com/Lk0wWJH.png",
+    "Power": "https://i.imgur.com/dps0BlO.png",
+    "Internet": "https://i.imgur.com/zpKPwpf.png",
+    "Volume": "https://i.imgur.com/COFA7YI.png",
+    "Avatar": "https://i.imgur.com/SKo8Snf.png"
+  }
+}
