@@ -17,7 +17,10 @@ function OOBE:OpenOOBE()
     self.background:SetColor( Color( 0, 90, 150 ) )
     self.background:SetSize( Vector2( Render.Size.x, Render.Size.y ) )
 
-    self.title_text = Label.Create( self.background )
+    self.setup1 = Label.Create()
+    self.setup1:SetDock( GwenPosition.Fill )
+
+    self.title_text = Label.Create( self.setup1 )
     self.title_text:SetText( "Create an account for this PC" )
     self.title_text:SetTextSize( 45 )
     self.title_text:SetTextColor( Color( 255, 255, 255, 220 ) )
@@ -27,7 +30,7 @@ function OOBE:OpenOOBE()
     end
     self.title_text:SizeToContents()
 
-    self.description_text = Label.Create( self.background )
+    self.description_text = Label.Create( self.setup1 )
     self.description_text:SetText( "If you want yo use a password, choose something that will be easy for you to remember but hard for other to guess." )
     self.description_text:SetTextSize( 20 )
     self.description_text:SetTextColor( Color( 255, 255, 255, 220 ) )
@@ -37,7 +40,7 @@ function OOBE:OpenOOBE()
     end
     self.description_text:SizeToContents()
 
-    self.tbox_username_text = Label.Create( self.background )
+    self.tbox_username_text = Label.Create( self.setup1 )
     self.tbox_username_text:SetText( "Who's going to use this PC?" )
     self.tbox_username_text:SetTextSize( 20 )
     self.tbox_username_text:SetPosition( Vector2( 100, self.description_text:GetPosition().y + 80 ) )
@@ -46,7 +49,7 @@ function OOBE:OpenOOBE()
     end
     self.tbox_username_text:SizeToContents()
 
-    self.tbox_username_background = Rectangle.Create( self.background )
+    self.tbox_username_background = Rectangle.Create( self.setup1 )
     self.tbox_username_background:SetColor( Color( 0, 0, 0, 100 ) )
     self.tbox_username_background:SetPosition( Vector2( 100, self.tbox_username_text:GetPosition().y + 35 ) )
     self.tbox_username_background:SetSize( Vector2( 350, 35 ) )
@@ -62,7 +65,7 @@ function OOBE:OpenOOBE()
         self.tbox_username:SetFont( AssetLocation.SystemFont, "Segoe UI" )
     end
 
-    self.tbox_password_text = Label.Create( self.background )
+    self.tbox_password_text = Label.Create( self.setup1 )
     self.tbox_password_text:SetText( "Make it secure." )
     self.tbox_password_text:SetTextSize( 20 )
     self.tbox_password_text:SetPosition( Vector2( 100, self.tbox_username_background:GetPosition().y + 80 ) )
@@ -71,7 +74,7 @@ function OOBE:OpenOOBE()
     end
     self.tbox_password_text:SizeToContents()
 
-    self.tbox_password_background = Rectangle.Create( self.background )
+    self.tbox_password_background = Rectangle.Create( self.setup1 )
     self.tbox_password_background:SetColor( Color( 0, 0, 0, 100 ) )
     self.tbox_password_background:SetPosition( Vector2( 100, self.tbox_password_text:GetPosition().y + 35 ) )
     self.tbox_password_background:SetSize( Vector2( 350, 35 ) )
@@ -88,7 +91,7 @@ function OOBE:OpenOOBE()
     end
     self.tbox_password:SetEnabled( false )
 
-    self.tbox_password2_background = Rectangle.Create( self.background )
+    self.tbox_password2_background = Rectangle.Create( self.setup1 )
     self.tbox_password2_background:SetColor( Color( 0, 0, 0, 100 ) )
     self.tbox_password2_background:SetPosition( Vector2( 100, self.tbox_password_background:GetPosition().y + 50 ) )
     self.tbox_password2_background:SetSize( Vector2( 350, 35 ) )
@@ -105,7 +108,7 @@ function OOBE:OpenOOBE()
     end
     self.tbox_password2:SetEnabled( false )
 
-    self.tbox_password3_background = Rectangle.Create( self.background )
+    self.tbox_password3_background = Rectangle.Create( self.setup1 )
     self.tbox_password3_background:SetColor( Color( 0, 0, 0, 100 ) )
     self.tbox_password3_background:SetPosition( Vector2( 100, self.tbox_password2_background:GetPosition().y + 50 ) )
     self.tbox_password3_background:SetSize( Vector2( 350, 35 ) )
@@ -121,7 +124,7 @@ function OOBE:OpenOOBE()
         self.tbox_password3:SetFont( AssetLocation.SystemFont, "Segoe UI" )
     end
 
-    self.next_button = Rectangle.Create( self.background )
+    self.next_button = Rectangle.Create( self.setup1 )
     self.next_button:SetColor( Color( 0, 120, 215 ) )
     self.next_button:SetSize( Vector2( 160, 40 ) )
     self.next_button:SetPosition( Vector2( Render.Size.x - 50 - self.next_button:GetSize().x, Render.Size.y - 50 - self.next_button:GetSize().y ) )
@@ -138,13 +141,33 @@ function OOBE:OpenOOBE()
 end
 
 function OOBE:Next()
+    self.background:SetVisible( false )
+    Mouse:SetVisible( false )
+
     if not self.tbox_username:GetText() or self.tbox_username:GetText() == "" then
         LocalPlayer:SetValue( "UserName", LocalPlayer:GetName() )
     else
         LocalPlayer:SetValue( "UserName", self.tbox_username:GetText() )
     end
-    self.background:SetVisible( false )
 
+    self.loadTimer = Timer()
+    self.PostTickEvent = Events:Subscribe( "PostTick", self, self.PostTick )
+
+    Events:Fire( "ShowLoadingCircle", { size = Vector2( Render.Size.x / 25, Render.Size.x / 25 ), position = Vector2( Render.Size.x / 2 - Render.Size.x / 25 / 2, Render.Size.y / 2 - Render.Size.x / 25 / 2 ), loadtext = "Just a moment..." } )
+end
+
+function OOBE:PostTick()
+    if self.loadTimer:GetSeconds() >= math.random( 10, 15 ) then
+        self:OpenDesktop()
+        Events:Fire( "HideLoadingCircle" )
+
+        Events:Unsubscribe( self.PostTickEvent )
+        self.PostTickEvent = nil
+        self.loadTimer = nil
+    end
+end
+
+function OOBE:OpenDesktop()
     LocalPlayer:SetValue( "EnabledDesktop", 1 )
     LocalPlayer:SetValue( "EnabledOOBE", nil )
     Events:Fire( "OpenDesktop" )

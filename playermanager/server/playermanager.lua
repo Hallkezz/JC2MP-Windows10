@@ -19,5 +19,4 @@ function PlayerManager:KickPlayer( args, sender )
     sender:Kick()
 end
 
-
 playermanager = PlayerManager()
