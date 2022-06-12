@@ -58,7 +58,7 @@ function LoadingCircle:PostRender()
             Render:SetFont( AssetLocation.SystemFont, "Segoe UI" )
         end
         Render:FillArea( Vector2.Zero, Render.Size, Color( 0, 90, 150 ) )
-        Render:DrawText( Render.Size / 2 - Vector2( Render:GetTextWidth( self.loadtext, Render.Size.x / 70 ) / 2, - self.size.y - Render.Size.y / 150 ), self.loadtext, Color.White, Render.Size.x / 70 )
+        Render:DrawText( Render.Size / 2 - Vector2( Render:GetTextWidth( self.loadtext, Render.Size.x / 70 ) / 2, - self.size.y + 10 ), self.loadtext, Color.White, Render.Size.x / 70 )
     end
 
     self.loadImage:Draw()

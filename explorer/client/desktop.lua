@@ -140,18 +140,7 @@ function Desktop:OpenDesktop()
     self.contextmenu:SetDock( GwenPosition.Fill )
     self.contextmenu:SetMargin( Vector2( 1, 1 ), Vector2( 1, 1 ) )
 
-    self:ContextMenuItems()
-
-    self.sound = ClientSound.Create(AssetLocation.Game, {
-        bank_id = 14,
-        sound_id = 4,
-        position = LocalPlayer:GetPosition(),
-        angle = Angle()
-    })
-
-    self.sound:SetParameter(0,0)
-    self.sound:SetParameter(1,0.75)
-    self.sound:SetParameter(2,0)
+    self:DesktopContextMenuItems()
 end
 
 function Desktop:TaskbarButtons()
@@ -228,15 +217,15 @@ function Desktop:ContextItem( text, enabled, pressfunction )
     end
 end
 
-function Desktop:ContextMenuItems()
+function Desktop:DesktopContextMenuItems()
     self:ContextItem( "View", true )
     self:ContextItem( "Sort by", true )
     self:ContextItem( "Refresh", true )
     self:ContextItem( "Paste", false )
     self:ContextItem( "Paste shorcut", false )
     self:ContextItem( "New", true )
-    self:ContextItem( "Display settings", true, function() LocalPlayer:DisplayWindow() end )
-    self:ContextItem( "Personalize", true, function() LocalPlayer:PersonalizeWindow() end )
+    self:ContextItem( "Display settings", true, function() error( "Failed to launch Settings app" ) end )
+    self:ContextItem( "Personalize", true, function() error( "Failed to launch Settings app" ) end )
 end
 
 function Desktop:ResolutionChange( args )
