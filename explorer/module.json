@@ -6,12 +6,12 @@
     "name": "Explorer"
   },
   "resources": {
-    "DefaultWallpaper": "https://i.imgur.com/OtAscTe.jpg",
-    "StartMenu": "https://i.imgur.com/8NRZ4KR.png",
-    "TaskView": "https://i.imgur.com/Lk0wWJH.png",
-    "Power": "https://i.imgur.com/dps0BlO.png",
-    "Internet": "https://i.imgur.com/zpKPwpf.png",
-    "Volume": "https://i.imgur.com/COFA7YI.png",
-    "Avatar": "https://i.imgur.com/SKo8Snf.png"
+    "DefaultWallpaper": "https://i.ibb.co/rfXGCshk/Default-Wallpaper.jpg",
+    "StartMenu": "https://i.ibb.co/Z6rZFy1S/Start-Menu.png",
+    "TaskView": "https://i.ibb.co/dwF4kMK1/TaskView.png",
+    "Power": "https://i.ibb.co/wFmNVr5L/Power.png",
+    "Internet": "https://i.ibb.co/Fbhxh2TK/Internet.png",
+    "Volume": "https://i.ibb.co/LDPWrCj0/Volume.png",
+    "Avatar": "https://i.ibb.co/s4Rv610/Avatar.png"
   }
 }
