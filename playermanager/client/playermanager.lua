@@ -1,7 +1,7 @@
 class "PlayerManager"
 
 function PlayerManager:__init()
-    Game:FireEvent( "ply.pause" )
+    Game:FireEvent("ply.pause")
 
     if not self.sound then
         self.sound = ClientSound.Create(AssetLocation.Game, {
@@ -11,20 +11,21 @@ function PlayerManager:__init()
             angle = Angle()
         })
     else
-        self.sound:SetPosition( Camera:GetPosition() )
+        self.sound:SetPosition(Camera:GetPosition())
     end
 
-    Events:Subscribe( "GameLoad", self, self.GameLoad )
-    Events:Subscribe( "KickPlayer", self, self.KickPlayer )
+    Events:Subscribe("GameLoad", self, self.GameLoad)
+    Events:Subscribe("KickPlayer", self, self.KickPlayer)
 end
 
 function PlayerManager:GameLoad()
     self.timer = Timer()
-    self.PostTickEvent = Events:Subscribe( "PostTick", self, self.PostTick )
+    self.PostTickEvent = Events:Subscribe("PostTick", self, self.PostTick)
 end
 
 function PlayerManager:PostTick()
     if self.timer:GetSeconds() <= 1 then return end
+
     if not self.sound then
         self.sound = ClientSound.Create(AssetLocation.Game, {
             bank_id = 14,
@@ -33,16 +34,16 @@ function PlayerManager:PostTick()
             angle = Angle()
         })
     else
-        self.sound:SetPosition( Camera:GetPosition() )
+        self.sound:SetPosition(Camera:GetPosition())
     end
 
-    Events:Unsubscribe( self.PostTickEvent )
+    Events:Unsubscribe(self.PostTickEvent)
     self.PostTickEvent = nil
     self.timer = nil
 end
 
 function PlayerManager:KickPlayer()
-    Network:Send( "KickPlayer" )
+    Network:Send("KickPlayer")
 end
 
-playermanager = PlayerManager()
+local playermanager = PlayerManager()
